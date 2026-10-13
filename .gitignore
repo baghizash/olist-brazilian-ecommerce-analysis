@@ -1,0 +1,13 @@
+# Data mentah dan database lokal tidak masuk repo.
+# Pengecualian: category_translation.csv kecil dan dibuat untuk analisis ini,
+# sehingga ikut di git agar analisis bisa direproduksi.
+data/*
+!data/raw/
+data/raw/*
+!data/raw/category_translation.csv
+*.db
+*.sqlite
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+venv/
