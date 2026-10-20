@@ -158,3 +158,29 @@ file geolocation 61 MB). Langkah reproduce:
 * Analisis kohor memakai jendela 90 hari setelah pembelian pertama
   supaya antar kohor bisa dibandingkan adil.
 * Format angka memakai konvensi Indonesia (koma desimal, titik ribuan).
+
+## Dashboard Power BI
+
+Kit Power BI untuk project ini ada di folder `powerbi/`, siap dibangun
+menjadi dashboard interaktif di Power BI Desktop:
+
+* `fact_pesanan.csv` (1 baris per order) dan `fact_item_pesanan.csv`
+  (1 baris per order item), dipisah per grain, plus dimensi
+  `dim_tanggal.csv`, `dim_kategori.csv`, `dim_status.csv`, dan
+  `dim_negara_bagian.csv`. CSV dibangun dari data mentah memakai
+  `powerbi/build_kit_csv.py`.
+* `measures_dax.md`: measures DAX lengkap dengan catatan level dan
+  tabel verifikasi angka. Penting: revenue adalah total harga produk
+  order delivered (13,22 juta BRL, tanpa ongkir); kolom total
+  pembayaran di fakta adalah pembayaran termasuk ongkir dan bukan
+  revenue.
+* `dashboard_layout.md` dan `build_guide.md`: rancangan dan panduan
+  membangun dashboard 4 halaman (16:9): (1) Ringkasan Eksekutif,
+  (2) Kategori Produk, (3) Pengiriman dan Review, (4) Geografi,
+  Retensi dan Metodologi. Pratinjau halaman 1 ada di
+  `powerbi/dashboard_preview_halaman1.png`.
+
+File `.pbix` dibangun lokal di Power BI Desktop (nama yang disarankan:
+`Olist-Ecommerce-Analysis.pbix`) dan tidak disimpan di repo ini karena
+GitHub tidak bisa menampilkan file `.pbix`; screenshot dashboard akan
+ditambahkan setelah file `.pbix` selesai dibangun.
