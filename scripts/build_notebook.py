@@ -362,12 +362,20 @@ pd.read_csv(RAW / "category_translation.csv").to_sql(
     "category_translation", con, if_exists="replace", index=False)
 
 # ---------- gaya chart ----------
-PALET = ["#0E7C7B", "#2563EB", "#38BDF8", "#F59E0B",
-         "#EF4444", "#8B5CF6", "#10B981", "#EC4899"]
+PALET = ["#A34A38", "#DE7A2D", "#C97B63", "#D9A05B",
+         "#7A2E1F", "#8A5A44", "#B98A5E", "#C97B63"]
 plt.rcParams.update({
     "figure.figsize": (10, 6),
     "figure.dpi": 120,
     "savefig.dpi": 120,
+    "figure.facecolor": "#F8F2E5",
+    "axes.facecolor": "#F8F2E5",
+    "savefig.facecolor": "#F8F2E5",
+    "text.color": "#33231C",
+    "axes.labelcolor": "#33231C",
+    "axes.edgecolor": "#B9A88F",
+    "xtick.color": "#33231C",
+    "ytick.color": "#33231C",
     "font.size": 11,
     "axes.titlesize": 14,
     "axes.titleweight": "bold",
@@ -376,6 +384,7 @@ plt.rcParams.update({
     "ytick.labelsize": 10,
 })
 sns.set_theme(style="whitegrid")
+plt.rcParams.update({"grid.color": "#DECFB4", "grid.linewidth": 0.7})
 
 BULAN_ID = {1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "Mei", 6: "Jun",
             7: "Jul", 8: "Agu", 9: "Sep", 10: "Okt", 11: "Nov", 12: "Des"}
@@ -438,7 +447,7 @@ fig, (ax1, ax2) = plt.subplots(
     2, 1, figsize=(10, 6), sharex=True,
     gridspec_kw={"height_ratios": [3, 2], "hspace": 0.08})
 
-ax1.plot(trend["label"], trend["revenue"] / 1e6, color="#0E7C7B",
+ax1.plot(trend["label"], trend["revenue"] / 1e6, color="#A34A38",
          linewidth=2.5, marker="o", markersize=4)
 ax1.set_title("Tren Revenue dan Jumlah Order per Bulan")
 ax1.set_ylabel("Revenue (juta BRL)")
@@ -451,7 +460,7 @@ ax1.annotate("puncak: " + label_bulan(puncak["ym"]),
              arrowprops=dict(arrowstyle="->", color="black"), fontsize=10,
              bbox=dict(boxstyle="round", facecolor="white", alpha=0.9))
 
-ax2.bar(trend["label"], trend["n_order"], color="#2563EB", width=0.7)
+ax2.bar(trend["label"], trend["n_order"], color="#DE7A2D", width=0.7)
 ax2.set_ylabel("Jumlah order")
 ax2.set_xlabel("Bulan")
 ax2.set_xticks(range(0, len(trend), 2))
@@ -515,7 +524,7 @@ tampil.round({{"revenue_juta": 2, "rata_rata_skor": 2,
 cells.append(cc('''
 top10 = kat.sort_values("revenue", ascending=False).head(10).sort_values("revenue")
 fig, ax = plt.subplots()
-ax.barh(top10["nama"], top10["revenue"] / 1e6, color="#0E7C7B")
+ax.barh(top10["nama"], top10["revenue"] / 1e6, color="#A34A38")
 ax.set_title("10 Kategori dengan Revenue Tertinggi")
 ax.set_xlabel("Revenue (juta BRL)")
 for i, v in enumerate(top10["revenue"] / 1e6):
@@ -524,7 +533,7 @@ simpan(fig, "02_top10_kategori_revenue.png")
 
 bot10 = kat.sort_values("revenue").head(10).sort_values("revenue", ascending=False)
 fig, ax = plt.subplots()
-ax.barh(bot10["nama"], bot10["revenue"] / 1e6, color="#2563EB")
+ax.barh(bot10["nama"], bot10["revenue"] / 1e6, color="#DE7A2D")
 ax.set_title("10 Kategori dengan Revenue Terendah")
 ax.set_xlabel("Revenue (juta BRL)")
 for i, v in enumerate(bot10["revenue"] / 1e6):
@@ -536,7 +545,7 @@ cells.append(cc('''
 fig, ax = plt.subplots()
 ukuran = kat["revenue"] / kat["revenue"].max() * 700 + 30
 ax.scatter(kat["bad_rate"] * 100, kat["avg_skor"], s=ukuran,
-           color="#0E7C7B", alpha=0.65, edgecolors="white")
+           color="#A34A38", alpha=0.65, edgecolors="white")
 top5 = kat.sort_values("revenue", ascending=False).head(5).reset_index(drop=True)
 offsets = [(10, 14), (-80, -24), (12, -16), (10, -22), (12, 12)]
 for (_, r), off in zip(top5.iterrows(), offsets):
@@ -600,7 +609,7 @@ cells.append(cc('''
 fig, ax = plt.subplots(figsize=(10, 6))
 label = ["Tepat waktu", "Telat"]
 nilai = [(1 - kirim["telat_rate"]) * 100, kirim["telat_rate"] * 100]
-warna = ["#0E7C7B", "#EF4444"]
+warna = ["#A34A38", "#7A2E1F"]
 bar = ax.barh(label, nilai, color=warna)
 ax.set_title("Ketepatan Waktu Pengiriman")
 ax.set_xlabel("Persentase order (%)")
@@ -658,7 +667,7 @@ tampil_state.round({"revenue": 0, "porsi_revenue": 3})
 cells.append(cc('''
 s10 = state.head(10).sort_values("revenue")
 fig, ax = plt.subplots()
-ax.barh(s10["state"], s10["revenue"] / 1e6, color="#0E7C7B")
+ax.barh(s10["state"], s10["revenue"] / 1e6, color="#A34A38")
 ax.set_title("10 State dengan Revenue Tertinggi")
 ax.set_xlabel("Revenue (juta BRL)")
 for i, v in enumerate(s10["revenue"] / 1e6):
@@ -666,7 +675,7 @@ for i, v in enumerate(s10["revenue"] / 1e6):
 simpan(fig, "07_state_revenue.png")
 
 fig, ax = plt.subplots()
-bar = ax.bar(kota["kota"], kota["n_order"], color="#2563EB")
+bar = ax.bar(kota["kota"], kota["n_order"], color="#DE7A2D")
 ax.set_title("5 Kota dengan Order Terbanyak")
 ax.set_ylabel("Jumlah order")
 ax.set_xticks(range(len(kota)))
@@ -728,7 +737,7 @@ cells.append(cc('''
 fig, ax = plt.subplots()
 label = ["Seller bermasalah\\n(bad rate di atas 30%)", "Seller lain"]
 nilai = [share30 * 100, (1 - share30) * 100]
-bar = ax.barh(label, nilai, color=["#EF4444", "#0E7C7B"])
+bar = ax.barh(label, nilai, color=["#7A2E1F", "#A34A38"])
 ax.set_title("Asal Bad Review menurut Kualitas Seller")
 ax.set_xlabel("Persentase dari seluruh bad review (%)")
 for b, v in zip(bar, nilai):
@@ -794,7 +803,7 @@ for b, v in zip(bar, pay["share"]):
 simpan(fig, "10_tipe_pembayaran.png")
 
 fig, ax = plt.subplots()
-bar = ax.bar(pay["tipe"], pay["avg_cicilan"], color="#0E7C7B")
+bar = ax.bar(pay["tipe"], pay["avg_cicilan"], color="#A34A38")
 ax.set_title("Rata rata Cicilan per Tipe Pembayaran")
 ax.set_xlabel("Tipe pembayaran")
 ax.set_ylabel("Rata rata cicilan (kali)")
@@ -853,7 +862,7 @@ cells.append(cc('''
 fig, ax = plt.subplots(figsize=(10, 6))
 vals = [(1 - ret["repeat_rate"]) * 100, ret["repeat_rate"] * 100]
 ax.pie(vals, labels=["Belanja 1 kali", "Belanja ulang"],
-       colors=["#E5E7EB", "#0E7C7B"], startangle=90,
+       colors=["#E5E7EB", "#A34A38"], startangle=90,
        autopct=lambda p: fpct(p / 100),
        wedgeprops=dict(width=0.45), textprops={"fontsize": 12})
 ax.set_title("Retensi Pelanggan")
