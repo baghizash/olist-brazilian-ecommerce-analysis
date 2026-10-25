@@ -159,7 +159,25 @@ file geolocation 61 MB). Langkah reproduce:
   supaya antar kohor bisa dibandingkan adil.
 * Format angka memakai konvensi Indonesia (koma desimal, titik ribuan).
 
+## Visualisasi Utama
+
+![Tren revenue dan jumlah order per bulan](charts/01_tren_revenue_order.png)
+
+*Tren revenue dan jumlah order per bulan*
+
+![10 kategori produk dengan revenue terbesar](charts/02_top10_kategori_revenue.png)
+
+*10 kategori produk dengan revenue terbesar*
+
+![Revenue per negara bagian](charts/07_state_revenue.png)
+
+*Revenue per negara bagian*
+
 ## Dashboard Power BI
+
+![Pratinjau halaman 1 dashboard Power BI](powerbi/dashboard_preview_halaman1.png)
+
+*Pratinjau layout halaman 1 dashboard dari kit di folder `powerbi/`.*
 
 Kit Power BI untuk project ini ada di folder `powerbi/`, siap dibangun
 menjadi dashboard interaktif di Power BI Desktop:
